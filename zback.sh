@@ -8,6 +8,7 @@
 #  todo      : なし
 #  
 #  ChangeLog : 
+#   ver 1.1    2014/04/02(月)  若干、整形。
 #   ver 1.0    2009/04/06(月)  新規作成
 #===================================================================================
 
@@ -24,7 +25,7 @@ main()
 	bak_path=$HOME/archive/zbackDir
 	bk_date=`date '+%Y%m%d'`
 
-    tarcmd=tar
+    tarcmd=\tar
 
 	test  $# -eq 0  && usage
 
@@ -52,7 +53,7 @@ main()
 
 	for infile in "$@"
 	do
-		test ! -f ${def_path}/${infile}.in.def && echo -e "Not Found. ${infile}.in.def" && exit 1
+		test ! -f ${def_path}/${infile}.def && echo -e "Not Found. ${infile}.def" && exit 1
 		exec_backup
 	done
 
@@ -67,10 +68,8 @@ function dir_check() {
 
 function exec_backup() {
 
-	ex_opt=""
-	test -f ${def_path}/${infile}.ex.def && ex_opt=" -X "${def_path}/${infile}.ex.def
 	out_file=${bak_path}/${infile}${suffix}.tar.gz
-	${tarcmd} cfhz ${out_file} -T ${def_path}/${infile}.in.def ${ex_opt}
+	${tarcmd} cfhz ${out_file} -T ${def_path}/${infile}.def
 	if [ $? -eq $SUCCESS ]; then
 		echo "  ${out_file}     を作成しました。"
 	else
